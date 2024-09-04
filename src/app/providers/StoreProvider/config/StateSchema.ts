@@ -5,12 +5,14 @@ import {
     UnknownAction,
 } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
+import { UserSchema } from '@/entities/User';
+import { LoginSchema } from '@/features/AuthByUsername';
 
 export interface StateSchema {
-    // user: UserSchema;
+    user: UserSchema;
 
     //  async
-    // loginForm?: LoginSchema;
+    loginForm?: LoginSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

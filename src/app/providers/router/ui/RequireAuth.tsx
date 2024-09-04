@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 import React from 'react';
-// import { getUserAuthData } from '@/entities/User';
+import { getUserAuthData } from '@/entities/User';
 import { RoutePath } from '@/shared/const/router';
 
 interface RequireAuthProps {
@@ -9,12 +9,12 @@ interface RequireAuthProps {
 }
 
 export function RequireAuth({ children }: RequireAuthProps) {
-    // const auth = useSelector(getUserAuthData);
+    const auth = useSelector(getUserAuthData);
     const location = useLocation();
 
-    // if (!auth) {
-    //     return <Navigate to={RoutePath.main} state={{ from: location }} replace />;
-    // }
+    if (!auth) {
+        return <Navigate to={RoutePath.login} state={{ from: location }} replace />;
+    }
 
     return children;
 }

@@ -30,7 +30,7 @@ export const DynamicModuleLoader: FC<DynamicModuleLoaderProps> = (props) => {
             // eslint-disable-next-line no-prototype-builtins
             const isMounted = mountedReducers.hasOwnProperty(name as StateSchemaKey);
             if (!isMounted) {
-                // store.reducerManager.add(name as StateSchemaKey, reducer);
+                store.reducerManager.add(name as StateSchemaKey, reducer);
                 dispatch({ type: `@INIT ${name} reducer` });
             }
         });

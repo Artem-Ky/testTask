@@ -32,7 +32,7 @@ export function createReducerManager(
             if (!key || reducers[key]) {
                 return;
             }
-            // reducers[key] = reducer;
+            reducers[key] = reducer;
 
             combinedReducer = combineReducers(reducers);
         },

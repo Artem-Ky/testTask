@@ -117,8 +117,12 @@
     "webpack-dev-server": "^4.7.4"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "@floating-ui/react-dom": "^2.1.1",
     "@headlessui/react": "^2.1.2",
+    "@mui/icons-material": "^6.0.2",
+    "@mui/material": "^6.0.2",
     "@react-spring/web": "^9.7.4",
     "@reduxjs/toolkit": "^2.2.6",
     "@typescript-eslint/eslint-plugin": "^7.16.0",
