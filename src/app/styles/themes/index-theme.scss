@@ -1,0 +1,22 @@
+
+
+body {
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    color: var(--main-color);
+}
+
+.app {
+    min-height: 100vh;
+    background-color: var(--bg-color);
+}
+
+.content-page {
+    display: flex;
+}
+
+.content {
+    width: 100%;
+    min-width: 0;
+    padding-top: var(--nav-bar-padding);
+}

@@ -1,0 +1,28 @@
+
+> production_project@1.0.0 storybook:build
+> storybook build -c ./config/storybook --output-dir /tmp/chromatic--2469-2ROlNIMp4kPB
+
+@storybook/cli v8.1.11
+
+info => Cleaning outputDir: ../../../../../../tmp/chromatic--2469-2ROlNIMp4kPB
+info => Loading presets
+info => Building manager..
+info => Manager built (161 ms)
+info => Building preview..
+info Addon-docs: using MDX3
+info => Using implicit CSS loaders
+info => Loading custom Webpack config (full-control mode).
+WARN asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+WARN This can impact web performance.
+WARN Assets: 
+WARN   8937.43433ff9.iframe.bundle.js (1.01 MiB)
+WARN   6758.1ff8c868.iframe.bundle.js (690 KiB)
+WARN entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
+WARN Entrypoints:
+WARN   main (1.08 MiB)
+WARN       runtime~main.afdaee53.iframe.bundle.js
+WARN       8937.43433ff9.iframe.bundle.js
+WARN       main.92dd538d.iframe.bundle.js
+WARN 
+info => Preview built (13 s)
+info => Output directory: /tmp/chromatic--2469-2ROlNIMp4kPB
