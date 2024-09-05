@@ -7,12 +7,14 @@ import {
 import { AxiosInstance } from 'axios';
 import { UserSchema } from '@/entities/User';
 import { LoginSchema } from '@/features/AuthByUsername';
+import { MainDocumentTableSchema } from '@/features/MainDocumentTable';
 
 export interface StateSchema {
     user: UserSchema;
 
     //  async
     loginForm?: LoginSchema;
+    mainDocumentsTable?: MainDocumentTableSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

@@ -1,6 +1,4 @@
-import React, {
-    FC, memo, useCallback,
-} from 'react';
+import React, { FC, memo, useCallback } from 'react';
 import cnBind from 'classnames/bind';
 import { useSelector } from 'react-redux';
 import {
@@ -144,9 +142,9 @@ export const LoginForm: FC<LoginFormProps> = memo((props: LoginFormProps) => {
                                     edge="end"
                                 >
                                     {showPassword ? (
-                                        <VisibilityOff />
-                                    ) : (
                                         <Visibility />
+                                    ) : (
+                                        <VisibilityOff />
                                     )}
                                 </IconButton>
                             </InputAdornment>

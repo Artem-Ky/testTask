@@ -31,12 +31,12 @@ export const loginByUsername = createAsyncThunk<
             if (remember) {
                 localStorage.setItem(
                     USER_LOCALSTORAGE_KEY,
-                    JSON.stringify(response.data.data.token),
+                    response.data.data.token,
                 );
             } else {
                 sessionStorage.setItem(
                     USER_LOCALSTORAGE_KEY,
-                    JSON.stringify(response.data.data.token),
+                    response.data.data.token,
                 );
             }
             dispatch(userActions.setAuthData(response.data));
