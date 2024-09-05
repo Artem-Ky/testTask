@@ -7,7 +7,7 @@ import {
 import { AxiosInstance } from 'axios';
 import { UserSchema } from '@/entities/User';
 import { LoginSchema } from '@/features/AuthByUsername';
-import { CreateDocumentFormSchema } from '@/features/CreateDocumentForm';
+import { CreateDocumentFormSchema } from '@/entities/Documents/CreateDocumentForm';
 import { documentTableSchema } from '@/widgets/DocumentTable';
 
 export interface StateSchema {

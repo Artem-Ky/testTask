@@ -12,7 +12,7 @@ import Paper from '@mui/material/Paper';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
 import cls from './DocumentsTable.module.scss';
-import { Document } from '@/entities/Document';
+import { Document } from '@/entities/Documents';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { useInitialEffect } from '@/shared/lib/hooks/useInitialEffect/useInitialEffect';
 import { fetchDocuments } from '../model/services/fetchDocuments/fetchDocuments';

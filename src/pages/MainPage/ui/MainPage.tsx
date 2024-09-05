@@ -4,7 +4,7 @@ import {
     DynamicModuleLoader,
     ReducersList,
 } from '@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
-import { CreateDocumentForm } from '@/features/CreateDocumentForm';
+import { CreateDocumentForm } from '@/entities/Documents/CreateDocumentForm';
 import { DocumentsTable, documentTableReducer } from '@/widgets/DocumentTable';
 
 const MainPage: FC = memo(() => {

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from '@/app/providers/StoreProvider';
-import { Document, DocumentFetch } from '@/entities/Document';
+import { Document, DocumentFetch } from '@/entities/Documents';
 import { $api } from '@/shared/api/api';
 
 export const fetchDocuments = createAsyncThunk<
