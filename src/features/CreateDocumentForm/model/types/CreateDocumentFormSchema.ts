@@ -1,5 +1,5 @@
-export interface Document {
-    id: string;
+export interface CreateDocumentFormSchema {
+    error?: string;
     companySigDate: string;
     companySignatureName: string;
     documentName: string;
@@ -8,8 +8,4 @@ export interface Document {
     employeeNumber: string;
     employeeSigDate: string;
     employeeSignatureName: string;
-}
-
-export interface DocumentFetch {
-    data: Document[];
 }

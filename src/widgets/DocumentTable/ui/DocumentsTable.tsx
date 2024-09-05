@@ -9,20 +9,35 @@ import {
     TableRow,
 } from '@mui/material';
 import Paper from '@mui/material/Paper';
+import dayjs from 'dayjs';
+import { useSelector } from 'react-redux';
 import cls from './DocumentsTable.module.scss';
-import { Document } from '../../model/types/Document';
+import { Document } from '@/entities/Document';
+import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { useInitialEffect } from '@/shared/lib/hooks/useInitialEffect/useInitialEffect';
+import { fetchDocuments } from '../model/services/fetchDocuments/fetchDocuments';
+import { getDocuments } from '../model/slices/documentTableSlice';
+import { getDocumentIsLoading } from '../model/selectors/getDocuments';
 
 interface DocumentsTableProps {
     className?: string;
-    documents: Document[];
     isLoading?: boolean;
 }
 
 export const DocumentsTable: FC<DocumentsTableProps> = memo(
     (props: DocumentsTableProps) => {
-        const { className = '', documents, isLoading } = props;
+        const { className = '', isLoading } = props;
         const cn = cnBind.bind(cls);
-        console.log(documents);
+
+        const dispatch = useAppDispatch();
+
+        const documents = useSelector(getDocuments.selectAll);
+        const documentsIsLoading = useSelector(getDocumentIsLoading);
+
+        useInitialEffect(() => {
+            dispatch(fetchDocuments());
+        });
+
         return (
             <TableContainer
                 component={Paper}
@@ -60,7 +75,9 @@ export const DocumentsTable: FC<DocumentsTableProps> = memo(
                                 }}
                             >
                                 <TableCell component="th" scope="row">
-                                    {document.companySigDate.toString()}
+                                    {dayjs(document.companySigDate).format(
+                                        'DD-MM-YYYY',
+                                    )}
                                 </TableCell>
                                 <TableCell align="right">
                                     {document.companySignatureName}
@@ -78,7 +95,9 @@ export const DocumentsTable: FC<DocumentsTableProps> = memo(
                                     {document.employeeNumber}
                                 </TableCell>
                                 <TableCell align="right">
-                                    {document.employeeSigDate.toString()}
+                                    {dayjs(document.employeeSigDate).format(
+                                        'DD-MM-YYYY',
+                                    )}
                                 </TableCell>
                                 <TableCell align="right">
                                     {document.employeeSignatureName}

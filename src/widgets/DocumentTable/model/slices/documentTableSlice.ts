@@ -5,27 +5,25 @@ import {
 } from '@reduxjs/toolkit';
 import { StateSchema } from '@/app/providers/StoreProvider';
 import { Document } from '@/entities/Document';
-import { MainDocumentTableSchema } from '../types/MainDocumentTableSchema';
 import { fetchDocuments } from '../services/fetchDocuments/fetchDocuments';
+import { documentTableSchema } from '../types/documentTableSchema';
 
-export const mainDocumentAdapter = createEntityAdapter<Document, string>({
+export const documentAdapter = createEntityAdapter<Document, string>({
     selectId: (document: Document) => document.id,
 });
 
-export const getMainDocuments = mainDocumentAdapter.getSelectors<StateSchema>(
-    (state) => state.mainDocumentsTable || mainDocumentAdapter.getInitialState(),
+export const getDocuments = documentAdapter.getSelectors<StateSchema>(
+    (state) => state.documentsTable || documentAdapter.getInitialState(),
 );
 
-const MainDocumentTableSlice = createSlice({
-    name: 'MainDocumentTableSlice',
-    initialState: mainDocumentAdapter.getInitialState<MainDocumentTableSchema>(
-        {
-            isLoading: false,
-            error: undefined,
-            ids: [],
-            entities: {},
-        },
-    ),
+const documentTableSlice = createSlice({
+    name: 'documentTableSlice',
+    initialState: documentAdapter.getInitialState<documentTableSchema>({
+        isLoading: false,
+        error: undefined,
+        ids: [],
+        entities: {},
+    }),
     reducers: {},
     extraReducers: (builder) => {
         builder
@@ -37,7 +35,7 @@ const MainDocumentTableSlice = createSlice({
                 fetchDocuments.fulfilled,
                 (state, action: PayloadAction<Document[]>) => {
                     state.isLoading = false;
-                    mainDocumentAdapter.setAll(state, action.payload);
+                    documentAdapter.setAll(state, action.payload);
                 },
             )
             .addCase(fetchDocuments.rejected, (state, action) => {
@@ -47,4 +45,4 @@ const MainDocumentTableSlice = createSlice({
     },
 });
 
-export const { reducer: MainDocumentTableReducer } = MainDocumentTableSlice;
+export const { reducer: documentTableReducer } = documentTableSlice;

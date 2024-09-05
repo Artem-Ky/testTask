@@ -8,7 +8,7 @@ export const addDocument = createAsyncThunk<
     Document,
     Document,
     ThunkConfig<string>
->('mainDocumentTable/addDocument', async (document, thunkApi) => {
+>('documentTable/addDocument', async (document, thunkApi) => {
     const { rejectWithValue, dispatch } = thunkApi;
 
     try {

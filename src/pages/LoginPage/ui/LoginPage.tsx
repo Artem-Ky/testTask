@@ -25,7 +25,7 @@ const LoginPage: FC<LoginPageProps> = memo((props: LoginPageProps) => {
 
     if (redirectToMain) {
         return (
-            <Navigate to={RoutePath.main} state={{ from: location }} replace />
+            <Navigate to={RoutePath.main} state={{ from: location }} />
         );
     }
 

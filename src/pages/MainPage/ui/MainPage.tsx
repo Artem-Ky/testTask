@@ -1,24 +1,25 @@
-import { FC, memo } from 'react';
+import { FC, memo, Suspense } from 'react';
 import { Page } from '@/widgets/Page';
-import {
-    MainDocumentTable,
-    MainDocumentTableReducer,
-} from '@/features/MainDocumentTable';
 import {
     DynamicModuleLoader,
     ReducersList,
 } from '@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
+import { CreateDocumentForm } from '@/features/CreateDocumentForm';
+import { DocumentsTable, documentTableReducer } from '@/widgets/DocumentTable';
 
 const MainPage: FC = memo(() => {
     const reducers: ReducersList = {
-        mainDocumentsTable: MainDocumentTableReducer,
+        documentsTable: documentTableReducer,
     };
 
     return (
         <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
             <Page>
                 <div>Главная страница сайта</div>
-                <MainDocumentTable />
+                <DocumentsTable />
+                <Suspense fallback="...">
+                    <CreateDocumentForm onSendForm={() => {}} />
+                </Suspense>
             </Page>
         </DynamicModuleLoader>
     );

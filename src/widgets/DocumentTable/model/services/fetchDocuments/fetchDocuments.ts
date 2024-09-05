@@ -7,7 +7,7 @@ export const fetchDocuments = createAsyncThunk<
     Document[],
     undefined,
     ThunkConfig<string>
->('mainDocumentTable/fetchDocuments', async (_props, thunkApi) => {
+>('documentTable/fetchDocuments', async (_props, thunkApi) => {
     const { rejectWithValue } = thunkApi;
 
     try {
