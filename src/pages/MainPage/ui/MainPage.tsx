@@ -1,10 +1,9 @@
-import { FC, memo, Suspense } from 'react';
+import { FC, memo } from 'react';
 import { Page } from '@/widgets/Page';
 import {
     DynamicModuleLoader,
     ReducersList,
 } from '@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
-import { CreateDocumentForm } from '@/entities/Documents/CreateDocumentForm';
 import { DocumentsTable, documentTableReducer } from '@/widgets/DocumentTable';
 
 const MainPage: FC = memo(() => {
@@ -17,9 +16,6 @@ const MainPage: FC = memo(() => {
             <Page>
                 <div>Главная страница сайта</div>
                 <DocumentsTable />
-                <Suspense fallback="...">
-                    <CreateDocumentForm onSendForm={() => {}} />
-                </Suspense>
             </Page>
         </DynamicModuleLoader>
     );

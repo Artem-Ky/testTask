@@ -1,1 +1,1 @@
-export type { Document, DocumentFetch } from './Document/model/types/Document';
+export type { Document, DocumentFetch, DocumentAddResponse } from './Document/model/types/Document';

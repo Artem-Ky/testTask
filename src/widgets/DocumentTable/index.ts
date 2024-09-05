@@ -1,3 +1,5 @@
+export { addDocumentToTable } from './model/slices/documentTableSlice';
+
 export { documentTableReducer } from './model/slices/documentTableSlice';
 
 export { DocumentsTable } from './ui/DocumentsTable';

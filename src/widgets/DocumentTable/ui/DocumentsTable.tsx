@@ -18,6 +18,7 @@ import { useInitialEffect } from '@/shared/lib/hooks/useInitialEffect/useInitial
 import { fetchDocuments } from '../model/services/fetchDocuments/fetchDocuments';
 import { getDocuments } from '../model/slices/documentTableSlice';
 import { getDocumentIsLoading } from '../model/selectors/getDocuments';
+import { CreateDocumentModal } from '@/features/CreateDocumentModal';
 
 interface DocumentsTableProps {
     className?: string;
@@ -39,74 +40,87 @@ export const DocumentsTable: FC<DocumentsTableProps> = memo(
         });
 
         return (
-            <TableContainer
-                component={Paper}
-                className={cn(cls.DocumentsTable, cls[className])}
-            >
-                <Table
-                    sx={{ minWidth: 650 }}
-                    size="small"
-                    aria-label="a dense table"
+            <>
+                <CreateDocumentModal />
+                <TableContainer
+                    component={Paper}
+                    className={cn(cls.DocumentsTable, cls[className])}
                 >
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>companySigDate</TableCell>
-                            <TableCell align="right">
-                                companySignatureName
-                            </TableCell>
-                            <TableCell align="right">documentName</TableCell>
-                            <TableCell align="right">documentStatus</TableCell>
-                            <TableCell align="right">documentType</TableCell>
-                            <TableCell align="right">employeeNumber</TableCell>
-                            <TableCell align="right">employeeSigDate</TableCell>
-                            <TableCell align="right">
-                                employeeSignatureName
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {documents?.map((document) => (
-                            <TableRow
-                                key={document.id}
-                                sx={{
-                                    '&:last-child td, &:last-child th': {
-                                        border: 0,
-                                    },
-                                }}
-                            >
-                                <TableCell component="th" scope="row">
-                                    {dayjs(document.companySigDate).format(
-                                        'DD-MM-YYYY',
-                                    )}
+                    <Table
+                        sx={{ minWidth: 650 }}
+                        size="small"
+                        aria-label="a dense table"
+                    >
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>companySigDate</TableCell>
+                                <TableCell align="right">
+                                    companySignatureName
                                 </TableCell>
                                 <TableCell align="right">
-                                    {document.companySignatureName}
+                                    documentName
                                 </TableCell>
                                 <TableCell align="right">
-                                    {document.documentName}
+                                    documentStatus
                                 </TableCell>
                                 <TableCell align="right">
-                                    {document.documentStatus}
+                                    documentType
                                 </TableCell>
                                 <TableCell align="right">
-                                    {document.documentType}
+                                    employeeNumber
                                 </TableCell>
                                 <TableCell align="right">
-                                    {document.employeeNumber}
+                                    employeeSigDate
                                 </TableCell>
                                 <TableCell align="right">
-                                    {dayjs(document.employeeSigDate).format(
-                                        'DD-MM-YYYY',
-                                    )}
-                                </TableCell>
-                                <TableCell align="right">
-                                    {document.employeeSignatureName}
+                                    employeeSignatureName
                                 </TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                        </TableHead>
+                        <TableBody>
+                            {documents?.map((document) => (
+                                <TableRow
+                                    key={document.id}
+                                    sx={{
+                                        '&:last-child td, &:last-child th': {
+                                            border: 0,
+                                        },
+                                    }}
+                                >
+                                    <TableCell component="th" scope="row">
+                                        {dayjs(document.companySigDate).format(
+                                            'DD-MM-YYYY',
+                                        )}
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        {document.companySignatureName}
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        {document.documentName}
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        {document.documentStatus}
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        {document.documentType}
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        {document.employeeNumber}
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        {dayjs(document.employeeSigDate).format(
+                                            'DD-MM-YYYY',
+                                        )}
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        {document.employeeSignatureName}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </>
         );
     },
 );

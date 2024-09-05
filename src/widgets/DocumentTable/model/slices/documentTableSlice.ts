@@ -24,7 +24,11 @@ const documentTableSlice = createSlice({
         ids: [],
         entities: {},
     }),
-    reducers: {},
+    reducers: {
+        addDocumentToTable(state, action: PayloadAction<Document>) {
+            documentAdapter.addOne(state, action.payload);
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchDocuments.pending, (state) => {
@@ -45,4 +49,4 @@ const documentTableSlice = createSlice({
     },
 });
 
-export const { reducer: documentTableReducer } = documentTableSlice;
+export const { actions: { addDocumentToTable }, reducer: documentTableReducer } = documentTableSlice;

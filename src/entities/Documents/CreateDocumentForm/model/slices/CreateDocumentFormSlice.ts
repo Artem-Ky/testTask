@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CreateDocumentFormSchema } from '../types/CreateDocumentFormSchema';
+import { Document } from '../../../Document/model/types/Document';
 
-const initialState: CreateDocumentFormSchema = {
+const initialState: Document = {
+    id: '',
     companySigDate: new Date().toISOString(),
     companySignatureName: '',
     documentName: '',
@@ -10,7 +11,6 @@ const initialState: CreateDocumentFormSchema = {
     employeeNumber: '',
     employeeSigDate: new Date().toISOString(),
     employeeSignatureName: '',
-    error: undefined,
 };
 
 export const CreateDocumentFormSlice = createSlice({
@@ -41,6 +41,7 @@ export const CreateDocumentFormSlice = createSlice({
         setEmployeeSignatureName: (state, action: PayloadAction<string>) => {
             state.employeeSignatureName = action.payload;
         },
+        clearForm: () => initialState,
     },
 });
 

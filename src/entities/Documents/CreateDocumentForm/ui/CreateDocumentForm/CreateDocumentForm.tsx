@@ -2,6 +2,7 @@ import React, { FC, memo, useCallback } from 'react';
 import cnBind from 'classnames/bind';
 import {
     Box,
+    Button,
     FormControl,
     FormLabel,
     Input,
@@ -33,15 +34,18 @@ import {
     getCreateDocumentFormEmployeeSigDate,
     getCreateDocumentFormEmployeeSignatureName,
 } from '../../model/selectors/CreateDocumentFormSelectors';
+import { StateSchema } from '@/app/providers/StoreProvider';
+import { Document } from '../../../Document/model/types/Document';
 
 export interface CreateDocumentFormProps {
     classNames?: string[];
     onSendForm: (document: Document) => void;
+    isLoading?: boolean;
 }
 
 const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
     (props: CreateDocumentFormProps) => {
-        const { classNames = [], onSendForm } = props;
+        const { classNames = [], onSendForm, isLoading } = props;
         const cn = cnBind.bind(cls);
         const dispatch = useAppDispatch();
         const companySigDate = useSelector(getCreateDocumentFormCompanySigDate);
@@ -62,6 +66,17 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
         const reducerList: ReducersList = {
             CreateDocumentForm: CreateDocumentFormReducer,
         };
+
+        const formState = useSelector(
+            (state: StateSchema) => state.CreateDocumentForm,
+        );
+
+        const onSendHandler = useCallback(() => {
+            if (formState) {
+                onSendForm(formState);
+                dispatch(CreateDocumentFormActions.clearForm());
+            }
+        }, [dispatch, onSendForm, formState]);
 
         const onChangeCompanySignatureName = useCallback(
             (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -168,8 +183,9 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'flex-start',
-                            columnGap: '32px',
+                            gap: '24px',
                             width: '100%',
+                            flexWrap: 'wrap',
                         }}
                     >
                         <Box
@@ -232,6 +248,7 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                                     type="text"
                                     value={companySignatureName || ''}
                                     onChange={onChangeCompanySignatureName}
+                                    required
                                 />
                             </FormControl>
                         </Box>
@@ -240,8 +257,9 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                         sx={{
                             display: 'flex',
                             alignItems: 'center',
-                            justifyContent: 'center',
-                            columnGap: '24px',
+                            justifyContent: 'flex-start',
+                            gap: '24px',
+                            flexWrap: 'wrap',
                         }}
                     >
                         <Box
@@ -266,6 +284,7 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                                     type="text"
                                     value={documentName || ''}
                                     onChange={onChangeDocumentName}
+                                    required
                                 />
                             </FormControl>
                         </Box>
@@ -291,6 +310,7 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                                     type="text"
                                     value={documentStatus || ''}
                                     onChange={onChangeDocumentStatus}
+                                    required
                                 />
                             </FormControl>
                         </Box>
@@ -316,6 +336,7 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                                     type="text"
                                     value={documentType || ''}
                                     onChange={onChangeDocumentType}
+                                    required
                                 />
                             </FormControl>
                         </Box>
@@ -324,8 +345,9 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                         sx={{
                             display: 'flex',
                             alignItems: 'center',
-                            justifyContent: 'center',
-                            columnGap: '24px',
+                            justifyContent: 'flex-start',
+                            gap: '24px',
+                            flexWrap: 'wrap',
                         }}
                     >
                         <Box
@@ -350,6 +372,7 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                                     type="text"
                                     value={employeeNumber || ''}
                                     onChange={onChangeEmployeeNumber}
+                                    required
                                 />
                             </FormControl>
                         </Box>
@@ -413,10 +436,18 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                                     type="text"
                                     value={employeeSignatureName || ''}
                                     onChange={onChangeEmployeeSignatureName}
+                                    required
                                 />
                             </FormControl>
                         </Box>
                     </Box>
+                    <Button
+                        onClick={onSendHandler}
+                        type="submit"
+                        disabled={isLoading}
+                    >
+                        Создать
+                    </Button>
                 </form>
             </DynamicModuleLoader>
         );

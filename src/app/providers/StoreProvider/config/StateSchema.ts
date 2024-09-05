@@ -7,8 +7,8 @@ import {
 import { AxiosInstance } from 'axios';
 import { UserSchema } from '@/entities/User';
 import { LoginSchema } from '@/features/AuthByUsername';
-import { CreateDocumentFormSchema } from '@/entities/Documents/CreateDocumentForm';
 import { documentTableSchema } from '@/widgets/DocumentTable';
+import { Document } from '@/entities/Documents';
 
 export interface StateSchema {
     user: UserSchema;
@@ -16,7 +16,7 @@ export interface StateSchema {
     //  async
     loginForm?: LoginSchema;
     documentsTable?: documentTableSchema;
-    CreateDocumentForm?: CreateDocumentFormSchema;
+    CreateDocumentForm?: Document;
 }
 
 export type StateSchemaKey = keyof StateSchema;
