@@ -1,3 +1,5 @@
+export { updateDocumentToTable } from './model/slices/documentTableSlice';
+
 export { addDocumentToTable } from './model/slices/documentTableSlice';
 
 export { documentTableReducer } from './model/slices/documentTableSlice';

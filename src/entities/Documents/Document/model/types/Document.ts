@@ -14,6 +14,6 @@ export interface DocumentFetch {
     data: Document[];
 }
 
-export interface DocumentAddResponse {
+export interface DocumentResponse {
     data: Document;
 }

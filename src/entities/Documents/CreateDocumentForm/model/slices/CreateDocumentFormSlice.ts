@@ -41,6 +41,17 @@ export const CreateDocumentFormSlice = createSlice({
         setEmployeeSignatureName: (state, action: PayloadAction<string>) => {
             state.employeeSignatureName = action.payload;
         },
+        setAllDocument: (state, action: PayloadAction<Document>) => {
+            state.id = action.payload.id;
+            state.companySigDate = action.payload.companySigDate;
+            state.companySignatureName = action.payload.companySignatureName;
+            state.documentName = action.payload.documentName;
+            state.documentStatus = action.payload.documentStatus;
+            state.documentType = action.payload.documentType;
+            state.employeeNumber = action.payload.employeeNumber;
+            state.employeeSigDate = action.payload.employeeSigDate;
+            state.employeeSignatureName = action.payload.employeeSignatureName;
+        },
         clearForm: () => initialState,
     },
 });

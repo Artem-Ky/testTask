@@ -1,4 +1,6 @@
-import React, { FC, memo, useCallback } from 'react';
+import React, {
+    FC, memo, useCallback, useEffect,
+} from 'react';
 import cnBind from 'classnames/bind';
 import {
     Box,
@@ -41,11 +43,17 @@ export interface CreateDocumentFormProps {
     classNames?: string[];
     onSendForm: (document: Document) => void;
     isLoading?: boolean;
+    editableDocument?: Document;
 }
 
 const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
     (props: CreateDocumentFormProps) => {
-        const { classNames = [], onSendForm, isLoading } = props;
+        const {
+            classNames = [],
+            onSendForm,
+            isLoading,
+            editableDocument,
+        } = props;
         const cn = cnBind.bind(cls);
         const dispatch = useAppDispatch();
         const companySigDate = useSelector(getCreateDocumentFormCompanySigDate);
@@ -170,6 +178,14 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
             [dispatch],
         );
 
+        useEffect(() => {
+            if (editableDocument) {
+                dispatch(
+                    CreateDocumentFormActions.setAllDocument(editableDocument),
+                );
+            }
+        }, [dispatch, editableDocument]);
+
         return (
             <DynamicModuleLoader reducers={reducerList} removeAfterUnmount>
                 <form
@@ -203,9 +219,6 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                                     dateAdapter={AdapterDayjs}
                                 >
                                     <DatePicker
-                                        defaultValue={dayjs(
-                                            companySigDate || new Date(),
-                                        )}
                                         value={
                                             companySigDate
                                                 ? dayjs(companySigDate)
@@ -446,7 +459,7 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                         type="submit"
                         disabled={isLoading}
                     >
-                        Создать
+                        {editableDocument ? 'Обновить' : 'Создать'}
                     </Button>
                 </form>
             </DynamicModuleLoader>

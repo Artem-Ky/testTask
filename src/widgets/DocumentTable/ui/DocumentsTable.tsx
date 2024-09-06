@@ -19,6 +19,7 @@ import { fetchDocuments } from '../model/services/fetchDocuments/fetchDocuments'
 import { getDocuments } from '../model/slices/documentTableSlice';
 import { getDocumentIsLoading } from '../model/selectors/getDocuments';
 import { CreateDocumentModal } from '@/features/CreateDocumentModal';
+import { EditDocumentModal } from '@/features/EditDocumentModal';
 
 interface DocumentsTableProps {
     className?: string;
@@ -75,6 +76,9 @@ export const DocumentsTable: FC<DocumentsTableProps> = memo(
                                 <TableCell align="right">
                                     employeeSignatureName
                                 </TableCell>
+                                <TableCell align="right">
+                                    Actions
+                                </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -114,6 +118,9 @@ export const DocumentsTable: FC<DocumentsTableProps> = memo(
                                     </TableCell>
                                     <TableCell align="right">
                                         {document.employeeSignatureName}
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        <EditDocumentModal document={document} />
                                     </TableCell>
                                 </TableRow>
                             ))}
