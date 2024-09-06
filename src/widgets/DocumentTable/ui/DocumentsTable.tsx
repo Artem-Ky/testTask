@@ -20,6 +20,7 @@ import { getDocuments } from '../model/slices/documentTableSlice';
 import { getDocumentIsLoading } from '../model/selectors/getDocuments';
 import { CreateDocumentModal } from '@/features/CreateDocumentModal';
 import { EditDocumentModal } from '@/features/EditDocumentModal';
+import { DeleteDocumentModal } from '@/features/DeleteDocumentModal';
 
 interface DocumentsTableProps {
     className?: string;
@@ -121,6 +122,7 @@ export const DocumentsTable: FC<DocumentsTableProps> = memo(
                                     </TableCell>
                                     <TableCell align="right">
                                         <EditDocumentModal document={document} />
+                                        <DeleteDocumentModal document={document} />
                                     </TableCell>
                                 </TableRow>
                             ))}

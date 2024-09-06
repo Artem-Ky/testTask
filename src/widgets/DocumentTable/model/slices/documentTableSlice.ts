@@ -31,6 +31,9 @@ const documentTableSlice = createSlice({
         updateDocumentToTable(state, action: PayloadAction<Document>) {
             documentAdapter.setOne(state, action.payload);
         },
+        removeDocumentToTable(state, action: PayloadAction<Document>) {
+            documentAdapter.removeOne(state, action.payload.id);
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -52,4 +55,11 @@ const documentTableSlice = createSlice({
     },
 });
 
-export const { actions: { addDocumentToTable, updateDocumentToTable }, reducer: documentTableReducer } = documentTableSlice;
+export const {
+    actions: {
+        addDocumentToTable,
+        updateDocumentToTable,
+        removeDocumentToTable,
+    },
+    reducer: documentTableReducer,
+} = documentTableSlice;

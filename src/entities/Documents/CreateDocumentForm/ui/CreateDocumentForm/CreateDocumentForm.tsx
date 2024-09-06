@@ -44,6 +44,7 @@ export interface CreateDocumentFormProps {
     onSendForm: (document: Document) => void;
     isLoading?: boolean;
     editableDocument?: Document;
+    readOnly?: boolean;
 }
 
 const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
@@ -52,6 +53,7 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
             classNames = [],
             onSendForm,
             isLoading,
+            readOnly,
             editableDocument,
         } = props;
         const cn = cnBind.bind(cls);
@@ -79,12 +81,16 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
             (state: StateSchema) => state.CreateDocumentForm,
         );
 
-        const onSendHandler = useCallback(() => {
-            if (formState) {
-                onSendForm(formState);
-                dispatch(CreateDocumentFormActions.clearForm());
-            }
-        }, [dispatch, onSendForm, formState]);
+        const onSendHandler = useCallback(
+            (e: React.FormEvent<HTMLFormElement>) => {
+                e.preventDefault();
+                if (formState) {
+                    onSendForm(formState);
+                    dispatch(CreateDocumentFormActions.clearForm());
+                }
+            },
+            [dispatch, onSendForm, formState],
+        );
 
         const onChangeCompanySignatureName = useCallback(
             (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -178,6 +184,13 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
             [dispatch],
         );
 
+        // eslint-disable-next-line no-nested-ternary
+        const accessTitle = editableDocument
+            ? readOnly
+                ? 'удалить'
+                : 'обновить'
+            : 'создать';
+
         useEffect(() => {
             if (editableDocument) {
                 dispatch(
@@ -193,6 +206,7 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                         cls.CreateDocumentForm,
                         ...classNames.map((clsName) => cls[clsName] || clsName),
                     )}
+                    onSubmit={onSendHandler}
                 >
                     <Box
                         sx={{
@@ -225,6 +239,7 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                                                 : dayjs()
                                         }
                                         format="DD-MM-YYYY"
+                                        readOnly={readOnly}
                                         onChange={handleCompanySigDateChange}
                                         slots={{
                                             // eslint-disable-next-line react/no-unstable-nested-components
@@ -259,6 +274,7 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                                     id="input-companySignatureName"
                                     name="companySignatureName"
                                     type="text"
+                                    readOnly={readOnly}
                                     value={companySignatureName || ''}
                                     onChange={onChangeCompanySignatureName}
                                     required
@@ -294,6 +310,7 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                                 <Input
                                     id="input-documentName"
                                     name="documentName"
+                                    readOnly={readOnly}
                                     type="text"
                                     value={documentName || ''}
                                     onChange={onChangeDocumentName}
@@ -319,6 +336,7 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                             >
                                 <Input
                                     id="input-documentStatus"
+                                    readOnly={readOnly}
                                     name="documentStatus"
                                     type="text"
                                     value={documentStatus || ''}
@@ -346,6 +364,7 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                                 <Input
                                     id="input-documentType"
                                     name="documentType"
+                                    readOnly={readOnly}
                                     type="text"
                                     value={documentType || ''}
                                     onChange={onChangeDocumentType}
@@ -381,6 +400,7 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                             >
                                 <Input
                                     id="input-employeeNumber"
+                                    readOnly={readOnly}
                                     name="employeeNumber"
                                     type="text"
                                     value={employeeNumber || ''}
@@ -413,6 +433,7 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                                                 : dayjs()
                                         }
                                         format="DD-MM-YYYY"
+                                        readOnly={readOnly}
                                         onChange={handleEmployeeSigDateChange}
                                         slots={{
                                             // eslint-disable-next-line react/no-unstable-nested-components
@@ -446,6 +467,7 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                                 <Input
                                     id="input-employeeSignatureName"
                                     name="employeeSignatureName"
+                                    readOnly={readOnly}
                                     type="text"
                                     value={employeeSignatureName || ''}
                                     onChange={onChangeEmployeeSignatureName}
@@ -455,11 +477,10 @@ const CreateDocumentForm: FC<CreateDocumentFormProps> = memo(
                         </Box>
                     </Box>
                     <Button
-                        onClick={onSendHandler}
                         type="submit"
                         disabled={isLoading}
                     >
-                        {editableDocument ? 'Обновить' : 'Создать'}
+                        {accessTitle}
                     </Button>
                 </form>
             </DynamicModuleLoader>
