@@ -6,6 +6,7 @@ import { editDocument } from '../../model/services/EditDocumentServis';
 import { Document } from '@/entities/Documents';
 import { CreateDocumentForm } from '@/entities/Documents/CreateDocumentForm';
 import { Modal } from '@/shared/ui/Modal';
+import { Loader } from '@/shared/ui/Loader';
 
 interface EditDocumentModalProps {
     classNames?: string[];
@@ -16,6 +17,7 @@ export const EditDocumentModal: FC<EditDocumentModalProps> = memo(
     (props: EditDocumentModalProps) => {
         const { classNames = [], document } = props;
         const [open, setOpen] = useState(false);
+        const [loading, setLoading] = useState(false);
         const handleOpen = () => setOpen(true);
         const handleClose = () => setOpen(false);
         const dispatch = useAppDispatch();
@@ -23,9 +25,12 @@ export const EditDocumentModal: FC<EditDocumentModalProps> = memo(
         const onEditDocument = useCallback(
             async (document: Document) => {
                 try {
+                    setLoading(true);
                     await dispatch(editDocument(document)).unwrap();
+                    setLoading(false);
                     handleClose();
                 } catch (err: any) {
+                    setLoading(false);
                     console.log(err);
                 }
             },
@@ -40,12 +45,16 @@ export const EditDocumentModal: FC<EditDocumentModalProps> = memo(
                 onOpen={handleOpen}
                 buttonTitle="edit"
             >
-                <Suspense fallback="...">
-                    <CreateDocumentForm
-                        onSendForm={onEditDocument}
-                        editableDocument={document}
-                    />
-                </Suspense>
+                <>
+                    <Suspense fallback="...">
+                        <CreateDocumentForm
+                            onSendForm={onEditDocument}
+                            editableDocument={document}
+                            isLoading={loading}
+                        />
+                    </Suspense>
+                    {loading && <Loader />}
+                </>
             </Modal>
         );
     },

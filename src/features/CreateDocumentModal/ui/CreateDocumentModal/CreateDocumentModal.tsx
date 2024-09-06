@@ -6,6 +6,7 @@ import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch
 import { createDocument } from '../../model/services/CreateDocumentServis';
 import { Document } from '@/entities/Documents';
 import { Modal } from '@/shared/ui/Modal';
+import { Loader } from '@/shared/ui/Loader';
 
 interface CreateDocumentModalProps {
     classNames?: string[];
@@ -15,6 +16,7 @@ export const CreateDocumentModal: FC<CreateDocumentModalProps> = memo(
     (props: CreateDocumentModalProps) => {
         const { classNames = [] } = props;
         const [open, setOpen] = useState(false);
+        const [loading, setLoading] = useState(false);
         const handleOpen = () => setOpen(true);
         const handleClose = () => setOpen(false);
         const dispatch = useAppDispatch();
@@ -22,9 +24,12 @@ export const CreateDocumentModal: FC<CreateDocumentModalProps> = memo(
         const onCreateDocument = useCallback(
             async (document: Document) => {
                 try {
+                    setLoading(true);
                     await dispatch(createDocument(document)).unwrap();
+                    setLoading(false);
                     handleClose();
                 } catch (err: any) {
+                    setLoading(false);
                     console.log(err);
                 }
             },
@@ -39,9 +44,15 @@ export const CreateDocumentModal: FC<CreateDocumentModalProps> = memo(
                 onOpen={handleOpen}
                 buttonTitle="create"
             >
-                <Suspense fallback="...">
-                    <CreateDocumentForm onSendForm={onCreateDocument} />
-                </Suspense>
+                <>
+                    <Suspense fallback="...">
+                        <CreateDocumentForm
+                            onSendForm={onCreateDocument}
+                            isLoading={loading}
+                        />
+                    </Suspense>
+                    {loading && <Loader />}
+                </>
             </Modal>
         );
     },

@@ -2,6 +2,7 @@ import React, { FC, memo, useCallback } from 'react';
 import cnBind from 'classnames/bind';
 import { useSelector } from 'react-redux';
 import {
+    Box,
     Button,
     Checkbox,
     FormControl,
@@ -28,6 +29,7 @@ import { loginActions, loginReducer } from '../../model/slice/LoginSlice';
 import { getLoginLoading } from '../../model/selectors/getLoginLoading/getLoginLoading';
 import cls from './LoginForm.module.scss';
 import { AppDispatch } from '@/app/providers/StoreProvider';
+import { Loader } from '@/shared/ui/Loader';
 
 interface LoginFormProps {
     classNames?: string[];
@@ -97,78 +99,93 @@ export const LoginForm: FC<LoginFormProps> = memo((props: LoginFormProps) => {
 
     return (
         <DynamicModuleLoader reducers={initialReducers}>
-            <form
-                className={cn(
-                    cls.LoginForm,
-                    ...classNames.map((clsName) => cls[clsName] || clsName),
-                )}
+            <Box
+                width="100%"
+                height="100%"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
             >
-                {error && (
-                    <Typography>
-                        Вы ввели неправильный логин или пароль
-                    </Typography>
-                )}
-                <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-username">
-                        Номер
-                    </InputLabel>
-                    <OutlinedInput
-                        id="outlined-adornment-username"
-                        name="username"
-                        type="text"
-                        autoFocus
-                        value={username}
-                        onChange={onChangeUsername}
-                        label="Username"
-                    />
-                </FormControl>
-                <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password">
-                        Пароль
-                    </InputLabel>
-                    <OutlinedInput
-                        id="outlined-adornment-password"
-                        name="password"
-                        type={showPassword ? 'text' : 'password'}
-                        value={password}
-                        onChange={onChangePassword}
-                        endAdornment={(
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                    onMouseUp={handleMouseUpPassword}
-                                    edge="end"
-                                >
-                                    {showPassword ? (
-                                        <Visibility />
-                                    ) : (
-                                        <VisibilityOff />
-                                    )}
-                                </IconButton>
-                            </InputAdornment>
-                        )}
-                        label="Password"
-                    />
-                </FormControl>
-                <FormControlLabel
-                    label="Запомнить меня?"
-                    control={(
-                        <Checkbox
-                            checked={rememberMe}
-                            onChange={onChangeRememberMe}
-                        />
+                <form
+                    className={cn(
+                        cls.LoginForm,
+                        ...classNames.map((clsName) => cls[clsName] || clsName),
                     )}
-                />
-                <Button
-                    onClick={onLoginClick}
-                    disabled={isLoading}
-                    type="submit"
                 >
-                    Войти
-                </Button>
-            </form>
+                    {error && (
+                        <Typography>
+                            Вы ввели неправильный логин или пароль
+                        </Typography>
+                    )}
+                    <FormControl
+                        sx={{ m: 1, width: '25ch' }}
+                        variant="outlined"
+                    >
+                        <InputLabel htmlFor="outlined-adornment-username">
+                            Логин
+                        </InputLabel>
+                        <OutlinedInput
+                            id="outlined-adornment-username"
+                            name="username"
+                            type="text"
+                            autoFocus
+                            value={username}
+                            onChange={onChangeUsername}
+                            label="Username"
+                        />
+                    </FormControl>
+                    <FormControl
+                        sx={{ m: 1, width: '25ch' }}
+                        variant="outlined"
+                    >
+                        <InputLabel htmlFor="outlined-adornment-password">
+                            Пароль
+                        </InputLabel>
+                        <OutlinedInput
+                            id="outlined-adornment-password"
+                            name="password"
+                            type={showPassword ? 'text' : 'password'}
+                            value={password}
+                            onChange={onChangePassword}
+                            endAdornment={(
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                        onMouseUp={handleMouseUpPassword}
+                                        edge="end"
+                                    >
+                                        {showPassword ? (
+                                            <Visibility />
+                                        ) : (
+                                            <VisibilityOff />
+                                        )}
+                                    </IconButton>
+                                </InputAdornment>
+                            )}
+                            label="Password"
+                        />
+                    </FormControl>
+                    <FormControlLabel
+                        label="Запомнить меня?"
+                        control={(
+                            <Checkbox
+                                checked={rememberMe}
+                                onChange={onChangeRememberMe}
+                            />
+                        )}
+                    />
+                    <Button
+                        onClick={onLoginClick}
+                        disabled={isLoading}
+                        type="submit"
+                    >
+                        Войти
+                    </Button>
+                    {isLoading && <Loader />}
+                </form>
+            </Box>
         </DynamicModuleLoader>
     );
 });

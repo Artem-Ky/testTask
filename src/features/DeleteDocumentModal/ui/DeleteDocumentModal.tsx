@@ -6,6 +6,7 @@ import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch
 import { deleteDocument } from '../model/services/DeleteDocumentServis';
 import { Document } from '@/entities/Documents';
 import { Modal } from '@/shared/ui/Modal';
+import { Loader } from '@/shared/ui/Loader';
 
 interface DeleteDocumentModalProps {
     classNames?: string[];
@@ -16,6 +17,7 @@ export const DeleteDocumentModal: FC<DeleteDocumentModalProps> = memo(
     (props: DeleteDocumentModalProps) => {
         const { classNames = [], document } = props;
         const [open, setOpen] = useState(false);
+        const [loading, setLoading] = useState(false);
         const handleOpen = () => setOpen(true);
         const handleClose = () => setOpen(false);
         const dispatch = useAppDispatch();
@@ -23,9 +25,12 @@ export const DeleteDocumentModal: FC<DeleteDocumentModalProps> = memo(
         const onDeleteDocument = useCallback(
             async (document: Document) => {
                 try {
+                    setLoading(true);
                     await dispatch(deleteDocument(document)).unwrap();
+                    setLoading(false);
                     handleClose();
                 } catch (err: any) {
+                    setLoading(false);
                     console.log(err);
                 }
             },
@@ -40,13 +45,17 @@ export const DeleteDocumentModal: FC<DeleteDocumentModalProps> = memo(
                 onOpen={handleOpen}
                 buttonTitle="delete"
             >
-                <Suspense fallback="...">
-                    <CreateDocumentForm
-                        onSendForm={onDeleteDocument}
-                        editableDocument={document}
-                        readOnly
-                    />
-                </Suspense>
+                <>
+                    <Suspense fallback="...">
+                        <CreateDocumentForm
+                            onSendForm={onDeleteDocument}
+                            editableDocument={document}
+                            isLoading={loading}
+                            readOnly
+                        />
+                    </Suspense>
+                    {loading && <Loader />}
+                </>
             </Modal>
         );
     },

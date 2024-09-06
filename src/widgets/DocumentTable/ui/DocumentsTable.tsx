@@ -21,6 +21,7 @@ import { getDocumentIsLoading } from '../model/selectors/getDocuments';
 import { CreateDocumentModal } from '@/features/CreateDocumentModal';
 import { EditDocumentModal } from '@/features/EditDocumentModal';
 import { DeleteDocumentModal } from '@/features/DeleteDocumentModal';
+import { Loader } from '@/shared/ui/Loader';
 
 interface DocumentsTableProps {
     className?: string;
@@ -129,6 +130,7 @@ export const DocumentsTable: FC<DocumentsTableProps> = memo(
                         </TableBody>
                     </Table>
                 </TableContainer>
+                {isLoading && <Loader />}
             </>
         );
     },
